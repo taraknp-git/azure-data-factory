@@ -1,0 +1,21 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "DataFactory-demo-08"
+		},
+		"AzureDataLakeStorage1_accountKey": {
+			"value": ""
+		},
+		"LinkedService_AzureDataLakeStorage2_accountKey": {
+			"value": ""
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"value": "https://datastorage08.dfs.core.windows.net"
+		},
+		"LinkedService_AzureDataLakeStorage2_properties_typeProperties_url": {
+			"value": "https://datastorage08.dfs.core.windows.net"
+		}
+	}
+}
