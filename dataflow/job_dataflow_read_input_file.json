@@ -1,0 +1,21 @@
+{
+	"name": "job_dataflow_read_input_file",
+	"properties": {
+		"description": "to read the input file from ADLS container",
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "dataset_DelimitedText",
+						"type": "DatasetReference"
+					},
+					"name": "sourceadls"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"script": "source(output(\n\t\tid as integer,\n\t\t{ firstname} as string,\n\t\t{ lastname} as string,\n\t\tactive as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: true) ~> sourceadls"
+		}
+	}
+}
