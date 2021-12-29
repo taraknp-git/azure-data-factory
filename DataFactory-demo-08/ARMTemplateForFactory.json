@@ -294,7 +294,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/pipeline_tfm_csv_to_parquet_copy1')]",
+			"name": "[concat(parameters('factoryName'), '/pipeline_tfm_csv_to_cleanCSV')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -313,12 +313,12 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "job_dataflow_read_input_file",
+								"referenceName": "job_dataflow_read_input_file_copy1",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
 									"sourceadls": {},
-									"sinkparquet": {}
+									"sinkCSV": {}
 								}
 							},
 							"staging": {},
@@ -337,7 +337,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/job_dataflow_read_input_file')]"
+				"[concat(variables('factoryId'), '/dataflows/job_dataflow_read_input_file_copy1')]"
 			]
 		}
 	]
