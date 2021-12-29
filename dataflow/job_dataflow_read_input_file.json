@@ -14,8 +14,12 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [],
-			"script": "source(output(\n\t\tid as integer,\n\t\t{ firstname} as string,\n\t\t{ lastname} as string,\n\t\tactive as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: true) ~> sourceadls"
+			"transformations": [
+				{
+					"name": "Select1"
+				}
+			],
+			"script": "source(output(\n\t\tid as integer,\n\t\t{ firstname} as string,\n\t\t{ lastname} as string,\n\t\tactive as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: true) ~> sourceadls\nsourceadls select(mapColumn(\n\t\tcust_id = id,\n\t\tfirst_name = { firstname},\n\t\tlast_name = { lastname},\n\t\tis_active = active\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1"
 		}
 	}
 }
