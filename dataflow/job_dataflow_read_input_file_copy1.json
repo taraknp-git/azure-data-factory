@@ -1,0 +1,36 @@
+{
+	"name": "job_dataflow_read_input_file_copy1",
+	"properties": {
+		"description": "to read the input file from ADLS container",
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "dataset_DelimitedText",
+						"type": "DatasetReference"
+					},
+					"name": "sourceadls"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dataset_out_CSV",
+						"type": "DatasetReference"
+					},
+					"name": "sinkCSV"
+				}
+			],
+			"transformations": [
+				{
+					"name": "Select1"
+				},
+				{
+					"name": "DerivedColumn1"
+				}
+			],
+			"script": "source(output(\n\t\tid as integer,\n\t\t{ firstname} as string,\n\t\t{ lastname} as string,\n\t\tactive as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: true) ~> sourceadls\nsourceadls select(mapColumn(\n\t\tcust_id = id,\n\t\tfirst_name = { firstname},\n\t\tlast_name = { lastname},\n\t\tis_active = active\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1 derive(enrollment_date = currentDate()) ~> DerivedColumn1\nDerivedColumn1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sinkCSV"
+		}
+	}
+}
